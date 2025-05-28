@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>See product</title>
+</head>
+
+<table>
+  <tr>
+    <th th:text="${product.productId}"/>
+  </tr>
+  <tr>
+    <th>Listing name</th>
+    <td th:text="${product.name}"/>
+  </tr>
+  <tr>
+    <th>Category</th>
+    <td th:text="${product.categoryId}"/>
+  </tr>
+  <tr>
+    <th>Description</th>
+    <td th:text="${product.description}"/>
+  </tr>
+  <tr>
+    <th>Price</th>
+    <td th:text="${product.price}"/>
+  </tr>
+  <tr>
+    <th>Photos</th>
+    <td/>
+  </tr>
+  <tr>
+    <th>Condition</th>
+    <td th:text="${product.condition}"/>
+  </tr>
+  <tr>
+    <th>Quantity</th>
+    <td th:text="${product.quantity}"/>
+  </tr>
+</table>
+
+<p>GO TO <a href="/product-list">product list</a></p>
+
+</body>
+</html>

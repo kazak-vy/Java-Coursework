@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>See categories</title>
+</head>
+<body>
+
+<table>
+  <tr>
+    <th>Category name</th>
+    <td th:text="${category.name}"/>
+  </tr>
+  <tr>
+    <th>Description</th>
+    <td th:text="${category.description}"/>
+  </tr>
+</table>
+
+<p>GO TO <a href="/">category list</a></p>
+
+</body>
+</html>

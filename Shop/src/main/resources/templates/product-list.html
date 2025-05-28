@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>See ALL products</title>
+</head>
+<body>
+
+<h1>All products</h1>
+<hr>
+<div th:each="product : ${products}">
+    <a style="text-decoration:none;color:black" th:href="'/' + ${product.productId}">
+    <table>
+        <tr>
+            <th th:text="${product.name}"/>
+        </tr>
+        <tr>
+            <td th:text="${product.price} + ' hrn'"/>
+        </tr>
+        <tr>
+            <td th:text="'condition: ' + ${product.condition}"/>
+        </tr>
+    </table>
+    </a>
+    <p><a style="background-color:yellow;text-decoration:none;color:black" th:href="'/' + ${product.productId} + '/edit'">Edit</a></p>
+    <p><a style="background-color:red;text-decoration:none;color:black" th:href="'/' + ${product.productId} + '/delete'">Delete</a></p>
+    <p><button style="background-color:">Add to cart</button></p>
+    <hr>
+</div>
+
+<p>GO TO <a href="/">main page</a></p>
+
+</body>
+</html>

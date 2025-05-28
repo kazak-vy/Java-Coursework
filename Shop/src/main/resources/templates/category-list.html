@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>See ALL categories</title>
+</head>
+<body>
+
+<h1>All categories</h1>
+<hr>
+<div th:each="category : ${categories}">
+    <table>
+      <tr>
+        <th th:text="${category.name}"/>
+      </tr>
+      <tr>
+        <td th:text="${category.description}"/>
+      </tr>
+    </table>
+  <p><button style="background-color:yellow">Edit</button></p>
+  <p><button style="background-color:red">Delete</button></p>
+  <hr>
+</div>
+
+<p>GO TO <a href="/">main page</a></p>
+
+</body>
+</html>
