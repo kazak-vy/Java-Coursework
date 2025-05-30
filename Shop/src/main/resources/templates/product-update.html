@@ -11,8 +11,11 @@
 <form th:object="${product}" method="post">
     <table>
         <tr>
+            <th th:text="${product.productId}"></th>
+        </tr>
+        <tr>
             <th><label for="name">Listing name</label></th>
-            <td><input id="name" th:field="*{name}" type="text" th:placeholder="${productToUpdate.name}"/></td>
+            <td><input id="name" th:field="*{name}" type="text" th:placeholder="${product.name}"/></td>
         </tr>
         <tr>
             <th><label for="category">Pick category</label></th>
@@ -23,11 +26,11 @@
         </tr>
         <tr>
             <th><label for="description">Description</label></th>
-            <td><input id="description" th:field="*{description}" type="text" th:placeholder="${productToUpdate.name}"/></td>
+            <td><input id="description" th:field="*{description}" type="text" th:placeholder="${product.name}"/></td>
         </tr>
         <tr>
             <th><label for="price">Price for one</label></th>
-            <td><input id="price" th:field="*{price}" type="number" th:value="${productToUpdate.price}"/></td>
+            <td><input id="price" th:field="*{price}" type="number" th:value="${product.price}"/></td>
         </tr>
         <tr>
             <th><label for="photos">Photo of product</label></th>
@@ -35,11 +38,19 @@
         </tr>
         <tr>
             <th><label for="condition">Pick condition</label></th>
-            <td><input id="condition" th:field="*{condition}" th:placeholder="${productToUpdate.condition}"/></td>
+            <td><select id="condition" th:field="*{condition}" required>
+                <option value="0" style="display:none" selected >select condition</option>
+                <option value="new">new</option>
+                <option value="like new">like new</option>
+                <option value="very good">very good</option>
+                <option value="good">good</option>
+                <option value="okay">okay</option>
+                <option value="bad">bad</option>
+            </select></td>
         </tr>
         <tr>
             <th><label for="quantity">Quantity available</label></th>
-            <td><input id="quantity" th:field="*{quantity}" th:value="${productToUpdate.quantity}"/></td>
+            <td><input id="quantity" th:field="*{quantity}" th:value="${product.quantity}"/></td>
         </tr>
         <tr>
             <th><input type="submit" value="edit"></th>

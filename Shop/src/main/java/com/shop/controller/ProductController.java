@@ -82,57 +82,30 @@ public class ProductController
     @GetMapping("{id}/edit")
     public String update(@PathVariable long id, Model model)
     {
-        Product productToUpdate = productService.getProductById(id)
+        Product product = productService.getProductById(id)
                 .orElseThrow(
                         () -> new RuntimeException("Item not found")
                 );
-        model.addAttribute("productToUpdate", productToUpdate);
-        model.addAttribute("product", new Product());
+        model.addAttribute("product", product);
         return "product-update.html";
     }
 
     @PostMapping("{id}/edit")
     public String updateProduct(@PathVariable long id, @ModelAttribute Product product, Model model)
     {
-        Product productToUpdate = productService.getProductById(id)
+        Product updatedProduct = productService.getProductById(id)
                 .orElseThrow(
                         () -> new RuntimeException("Item not found")
                 );
 
-        System.out.println(product.getName());
-        System.out.println(productToUpdate.getName());
+        updatedProduct.setName(product.getName());
+        updatedProduct.setCategoryId(product.getCategoryId());
+        updatedProduct.setDescription(product.getDescription());
+        updatedProduct.setPrice(product.getPrice());
+        updatedProduct.setCondition(product.getCondition());
+        updatedProduct.setQuantity(product.getQuantity());
 
-        if(!product.getName().isEmpty())
-        {
-            productToUpdate.setName(product.getName());
-        }
-
-        if(product.getCategoryId() != 0)
-        {
-            productToUpdate.setCategoryId(product.getCategoryId());
-        }
-
-        if(!product.getName().isEmpty())
-        {
-            productToUpdate.setDescription(product.getDescription());
-        }
-
-        if(product.getPrice() >= 1)
-        {
-            productToUpdate.setPrice(product.getPrice());
-        }
-
-        if(product.getQuantity() >= 1)
-        {
-            productToUpdate.setQuantity(product.getQuantity());
-        }
-
-        if(!product.getCondition().equals("0"))
-        {
-            productToUpdate.setCondition(product.getCondition());
-        }
-
-        productService.saveProduct(productToUpdate);
+        productService.saveProduct(updatedProduct);
 
         return "redirect:/{id}";
     }
