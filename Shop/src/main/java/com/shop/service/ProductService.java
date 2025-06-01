@@ -1,7 +1,7 @@
 package com.shop.service;
 
-import com.shop.model.Category;
-import com.shop.model.Product;
+import com.shop.entity.Category;
+import com.shop.entity.Product;
 import com.shop.repository.CategoryRepository;
 import com.shop.repository.ProductRepository;
 import lombok.AllArgsConstructor;

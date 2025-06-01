@@ -9,7 +9,7 @@
 <h1>All products</h1>
 <hr>
 <div th:each="product : ${products}">
-    <a style="text-decoration:none;color:black" th:href="'/' + ${product.productId}">
+    <a style="text-decoration:none;color:black" th:href="'/products/' + ${product.productId}">
     <table>
         <tr>
             <th th:text="${product.name}"/>
@@ -22,8 +22,8 @@
         </tr>
     </table>
     </a>
-    <p><a style="background-color:yellow;text-decoration:none;color:black" th:href="'/' + ${product.productId} + '/edit'">Edit</a></p>
-    <p><a style="background-color:red;text-decoration:none;color:black" th:href="'/' + ${product.productId} + '/delete'">Delete</a></p>
+    <p><a style="background-color:yellow;text-decoration:none;color:black" th:href="'/products/' + ${product.productId} + '/edit'">Edit</a></p>
+    <p><a style="background-color:red;text-decoration:none;color:black" th:href="'/products/' + ${product.productId} + '/delete'">Delete</a></p>
     <p><button style="background-color:">Add to cart</button></p>
     <hr>
 </div>

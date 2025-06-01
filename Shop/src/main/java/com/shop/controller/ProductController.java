@@ -3,8 +3,8 @@ package com.shop.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.shop.model.Category;
-import com.shop.model.Product;
+import com.shop.entity.Category;
+import com.shop.entity.Product;
 import com.shop.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,38 +18,38 @@ public class ProductController
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/product-list")
+    @GetMapping("/products/product-list")
     public String allProducts(Model model)
     {
         List<Product> productList = productService.getAllProducts();
         model.addAttribute("products", productList);
-        return "product-list.html";
+        return "products/product-list.html";
     }
 
-    @GetMapping("/category-list")
+    @GetMapping("/categories/category-list")
     public String allCategories(Model model)
     {
         List<Category> categoryList = productService.getAllCategories();
         model.addAttribute("categories", categoryList);
-        return "category-list.html";
+        return "/categories/category-list.html";
     }
 
-    @GetMapping("/create-product")
+    @GetMapping("/products/create-product")
     public String createProductForm(Model model)
     {
         model.addAttribute("categories", productService.getAllCategories());
         model.addAttribute("product", new Product());
-        return "create-product.html";
+        return "products/create-product.html";
     }
 
-    @GetMapping("/create-category")
+    @GetMapping("/categories/create-category")
     public String createCategory(Model model)
     {
         model.addAttribute("category", new Category());
-        return "create-category.html";
+        return "categories/create-category.html";
     }
 
-    @PostMapping("/create-product")
+    @PostMapping("/products/create-product")
     public String addProduct(@Valid @ModelAttribute Product product, Model model)
     {
         product.setSellerId(1);
@@ -58,42 +58,42 @@ public class ProductController
 
         productService.saveProduct(product);
 
-        return "product-info.html";
+        return "products/product-info.html";
     }
 
-    @PostMapping("/create-category")
+    @PostMapping("/categories/create-category")
     public String addCategory(@Valid @ModelAttribute Category category, Model model)
     {
         productService.saveCategory(category);
-        return "category-info.html";
+        return "/categories/category-info.html";
     }
 
-    @GetMapping("/{id}")
-    public String getProductById(@PathVariable long id, Model model)
+    @GetMapping("/products/{productId}")
+    public String getProductById(@PathVariable long productId, Model model)
     {
-        Product product = productService.getProductById(id)
+        Product product = productService.getProductById(productId)
                 .orElseThrow(
-                        () -> new RuntimeException(String.format("Product with %d id not found", id))
+                        () -> new RuntimeException(String.format("Product with %d id not found", productId))
                 );
         model.addAttribute("product", product);
-        return "product-info.html";
+        return "products/product-info.html";
     }
 
-    @GetMapping("{id}/edit")
-    public String update(@PathVariable long id, Model model)
+    @GetMapping("/products/{productId}/edit")
+    public String update(@PathVariable long productId, Model model)
     {
-        Product product = productService.getProductById(id)
+        Product product = productService.getProductById(productId)
                 .orElseThrow(
                         () -> new RuntimeException("Item not found")
                 );
         model.addAttribute("product", product);
-        return "product-update.html";
+        return "products/product-update.html";
     }
 
-    @PostMapping("{id}/edit")
-    public String updateProduct(@PathVariable long id, @ModelAttribute Product product, Model model)
+    @PostMapping("/products/{productId}/edit")
+    public String updateProduct(@PathVariable long productId, @ModelAttribute Product product, Model model)
     {
-        Product updatedProduct = productService.getProductById(id)
+        Product updatedProduct = productService.getProductById(productId)
                 .orElseThrow(
                         () -> new RuntimeException("Item not found")
                 );
@@ -107,21 +107,21 @@ public class ProductController
 
         productService.saveProduct(updatedProduct);
 
-        return "redirect:/{id}";
+        return "redirect:/products/{id}";
     }
 
 
-    @GetMapping("/{id}/delete")
-    public String deleteProduct(@PathVariable long id)
+    @GetMapping("/products/{productId}/delete")
+    public String deleteProduct(@PathVariable long productId)
     {
-        Product productToDelete = productService.getProductById(id)
+        Product productToDelete = productService.getProductById(productId)
                 .orElseThrow(
-                        () -> new RuntimeException(String.format("Product with %d id not found", id))
+                        () -> new RuntimeException(String.format("Product with %d id not found", productId))
                 );
 
         productService.deleteProduct(productToDelete);
 
-        return "redirect:/product-list";
+        return "redirect:/products/product-list";
     }
 
 }

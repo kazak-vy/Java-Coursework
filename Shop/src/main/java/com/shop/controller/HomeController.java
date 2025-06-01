@@ -1,12 +1,7 @@
 package com.shop.controller;
 
-import com.shop.model.Product;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 
 @Controller
 public class HomeController
@@ -17,6 +12,10 @@ public class HomeController
         return "index.html";
     }
 
-
+    @GetMapping("/authorized")
+    public String loggedIn()
+    {
+        return "test.html";
+    }
 
 }
