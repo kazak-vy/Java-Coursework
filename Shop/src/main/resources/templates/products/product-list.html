@@ -8,7 +8,8 @@
 
 <h1>All products</h1>
 <hr>
-<div th:each="product : ${products}">
+<div style="display:flex;">
+<div th:each="product : ${products}" style="margin:20px;padding:6px;background-color:darkseagreen;">
     <a style="text-decoration:none;color:black" th:href="'/products/' + ${product.productId}">
     <table>
         <tr>
@@ -24,8 +25,9 @@
     </a>
     <p><a style="background-color:yellow;text-decoration:none;color:black" th:href="'/products/' + ${product.productId} + '/edit'">Edit</a></p>
     <p><a style="background-color:red;text-decoration:none;color:black" th:href="'/products/' + ${product.productId} + '/delete'">Delete</a></p>
-    <p><a style="background-color:blue;color:white;text-decoration:none" th:href="'/products/' + ${product.productId} + '/add'">Add to cart</a></p>
+    <p><a style="background-color:blue;color:white;text-decoration:none" th:href="'/cart/' + ${product.productId} + '/add'">Add to cart</a></p>
     <hr>
+</div>
 </div>
 
 <p>GO TO <a href="/">main page</a></p>

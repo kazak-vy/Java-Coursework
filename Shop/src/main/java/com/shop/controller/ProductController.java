@@ -7,6 +7,7 @@ import com.shop.entity.CartItem;
 import com.shop.entity.Category;
 import com.shop.entity.Product;
 import com.shop.service.CartService;
+import com.shop.service.CategoryService;
 import com.shop.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import static com.shop.utils.UserUtils.getUserId;
 
 @Controller
+@RequestMapping("/products")
 public class ProductController
 {
     @Autowired
@@ -25,7 +27,7 @@ public class ProductController
     @Autowired
     private CartService cartService;
 
-    @GetMapping("/products/product-list")
+    @GetMapping("/product-list")
     public String allProducts(Model model)
     {
         List<Product> productList = productService.getAllProducts();
@@ -33,30 +35,17 @@ public class ProductController
         return "products/product-list.html";
     }
 
-    @GetMapping("/categories/category-list")
-    public String allCategories(Model model)
-    {
-        List<Category> categoryList = productService.getAllCategories();
-        model.addAttribute("categories", categoryList);
-        return "/categories/category-list.html";
-    }
-
-    @GetMapping("/products/create-product")
+    @GetMapping("/create-product")
     public String createProductForm(Model model)
     {
-        model.addAttribute("categories", productService.getAllCategories());
+        CategoryService categoryService = new CategoryService();
+
+        model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("product", new Product());
         return "products/create-product.html";
     }
 
-    @GetMapping("/categories/create-category")
-    public String createCategory(Model model)
-    {
-        model.addAttribute("category", new Category());
-        return "categories/create-category.html";
-    }
-
-    @PostMapping("/products/create-product")
+    @PostMapping("/create-product")
     public String addProduct(@Valid @ModelAttribute Product product, Model model)
     {
         product.setSellerId(1);
@@ -68,14 +57,7 @@ public class ProductController
         return "products/product-info.html";
     }
 
-    @PostMapping("/categories/create-category")
-    public String addCategory(@Valid @ModelAttribute Category category, Model model)
-    {
-        productService.saveCategory(category);
-        return "/categories/category-info.html";
-    }
-
-    @GetMapping("/products/{productId}")
+    @GetMapping("/{productId}")
     public String getProductById(@PathVariable long productId, Model model)
     {
         Product product = productService.getProductById(productId)
@@ -86,7 +68,7 @@ public class ProductController
         return "products/product-info.html";
     }
 
-    @GetMapping("/products/{productId}/edit")
+    @GetMapping("/{productId}/edit")
     public String update(@PathVariable long productId, Model model)
     {
         Product product = productService.getProductById(productId)
@@ -97,7 +79,7 @@ public class ProductController
         return "products/product-update.html";
     }
 
-    @PostMapping("/products/{productId}/edit")
+    @PostMapping("/{productId}/edit")
     public String updateProduct(@PathVariable long productId, @ModelAttribute Product product, Model model)
     {
         Product updatedProduct = productService.getProductById(productId)
@@ -118,7 +100,7 @@ public class ProductController
     }
 
 
-    @GetMapping("/products/{productId}/delete")
+    @GetMapping("/{productId}/delete")
     public String deleteProduct(@PathVariable long productId)
     {
         Product productToDelete = productService.getProductById(productId)
@@ -130,23 +112,4 @@ public class ProductController
 
         return "redirect:/products/product-list";
     }
-
-    @GetMapping("/products/{productId}/add")
-    public String addProductToCart(@PathVariable long productId)
-    {
-        Product productToAdd = productService.getProductById(productId)
-                .orElseThrow(
-                        () -> new RuntimeException(String.format("Product with %d id not found", productId))
-                );
-
-        CartItem item = new CartItem(productId, 1);
-        cartService.addItem(getUserId(), item);
-
-        System.out.println(item.getProductId());
-        System.out.println(item.getQuantity());
-        System.out.println("added");
-
-        return "redirect:/products/product-list";
-    }
-
 }

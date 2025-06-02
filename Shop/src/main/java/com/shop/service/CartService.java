@@ -2,30 +2,100 @@ package com.shop.service;
 
 import com.shop.entity.Cart;
 import com.shop.entity.CartItem;
+import com.shop.repository.CartItemRepository;
+import com.shop.repository.CartRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
+import java.util.Optional;
 
 @Service
-public class CartService {
+public class CartService
+{
+    @Autowired
+    private CartRepository cartRepository;
 
-    private final Map<String, Cart> carts = new ConcurrentHashMap<>();
+    @Autowired
+    private CartItemRepository cartItemRepository;
 
-    public Cart getCart(String userId) {
-        return carts.computeIfAbsent(userId, k -> new Cart(userId, new ArrayList<>()));
+    public List<Cart> getAllCarts()
+    {
+        return cartRepository.findAll();
     }
 
-    public Cart addItem(String userId, CartItem item) {
-        Cart cart = getCart(userId);
-        cart.getItems().add(item); // enhance: merge if same product
-        return cart;
+    public Optional<Cart> getCartById(long cartId)
+    {
+        return cartRepository.findById(cartId);
     }
 
-    public Cart removeItem(String userId, Long productId) {
-        Cart cart = getCart(userId);
-        cart.getItems().removeIf(i -> i.getProductId().equals(productId));
-        return cart;
+    public void saveCart(Cart cart)
+    {
+        cartRepository.save(cart);
+    }
+
+    public void deleteCart(Cart cart)
+    {
+        cartRepository.delete(cart);
+    }
+
+    public Cart getCartByUserId(String userId)
+    {
+        return cartRepository.findCartByUserId(userId);
+    }
+
+    public long getCartIdByUserId(String userId)
+    {
+        return cartRepository.findCartByUserId(userId).getCartId();
+    }
+
+    public List<CartItem> getAllCartItems()
+    {
+        return cartItemRepository.findAll();
+    }
+
+    public Optional<CartItem> getCartItemById(long cartItemId)
+    {
+        return cartItemRepository.findById(cartItemId);
+    }
+
+    public void saveCartItem(CartItem cartItem)
+    {
+        cartItemRepository.save(cartItem);
+    }
+
+    public void deleteCartItem(CartItem cartItem)
+    {
+        cartItemRepository.delete(cartItem);
+    }
+
+    public List<CartItem> getCartItemsByCartId(long cartId)
+    {
+        return cartItemRepository.findCartItemsByCartId(cartId);
+    }
+
+    public List<CartItem> getCartItemsByUserId(String userId)
+    {
+        long cartId = cartRepository.findCartByUserId(userId).getCartId();
+
+        return cartItemRepository.findCartItemsByCartId(cartId);
+    }
+
+    public void addToCart(long cartId, long productId)
+    {
+        Optional<CartItem> existingItem = cartItemRepository.findCartItemByCartIdAndProductId(cartId, productId);
+
+        if (existingItem.isPresent()) {
+            CartItem item = existingItem.get();
+            item.setQuantity(item.getQuantity() + 1);
+            cartItemRepository.save(item);
+        } else {
+            // Add new product to cart
+            CartItem newItem = new CartItem();
+            newItem.setCartId(cartId);
+            newItem.setProductId(productId);
+            newItem.setQuantity(1);
+            cartItemRepository.save(newItem);
+        }
     }
 }

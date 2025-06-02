@@ -1,8 +1,6 @@
 package com.shop.service;
 
-import com.shop.entity.Category;
 import com.shop.entity.Product;
-import com.shop.repository.CategoryRepository;
 import com.shop.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +16,6 @@ public class ProductService
     @Autowired
     private ProductRepository productRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
-
     public List<Product> getAllProducts()
     {
         return productRepository.findAll();
@@ -31,9 +26,9 @@ public class ProductService
         return productRepository.findById(id);
     }
 
-    public Product saveProduct(Product product)
+    public void saveProduct(Product product)
     {
-        return productRepository.save(product);
+        productRepository.save(product);
     }
 
     public void deleteProduct(Product product)
@@ -41,25 +36,7 @@ public class ProductService
         productRepository.delete(product);
     }
 
-    public List<Category> getAllCategories()
-    {
-        return categoryRepository.findAll();
-    }
 
-    public Optional<Category> getCategoryById(long id)
-    {
-        return categoryRepository.findById(id);
-    }
-
-    public Category saveCategory(Category category)
-    {
-        return categoryRepository.save(category);
-    }
-
-    public void deleteCategory(Category category)
-    {
-        categoryRepository.delete(category);
-    }
 }
 
 

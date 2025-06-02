@@ -6,33 +6,54 @@ import com.shop.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static com.shop.utils.UserUtils.getUserId;
 
 
-@RestController
+@Controller
 @RequestMapping("/cart")
-public class CartController {
-
+public class CartController
+{
     @Autowired
     private CartService cartService;
 
-    @GetMapping
-    public Cart getCart(OAuth2AuthenticationToken authentication)
+    @GetMapping("/view")
+    public String getCart(Model model)
     {
-        return cartService.getCart(getUserId());
+        if(cartService.getCartByUserId(getUserId()) == null)
+        {
+            System.out.println("new cart");
+            Cart newCart = new Cart();
+            newCart.setUserId(getUserId());
+
+            cartService.saveCart(newCart);
+        }
+        else
+        {
+            System.out.println("existing cart");
+            List<CartItem> cartItemsList = cartService.getCartItemsByUserId(getUserId());
+            System.out.println(cartItemsList);
+            model.addAttribute("itemsList", cartItemsList);
+        }
+        return "cart/cart-view.html";
     }
 
-    @PostMapping("/add")
-    public Cart addToCart(@RequestBody CartItem item, Authentication authentication) {
-        String userId = "test";
-        return cartService.addItem(userId, item);
+    @GetMapping("/{productId}/add")
+    public String addToCart(@PathVariable long productId)
+    {
+        long cartId = cartService.getCartIdByUserId(getUserId());
+        cartService.addToCart(cartId, productId);
+
+        return "redirect:/products/product-list";
     }
 
     @DeleteMapping("/remove/{productId}")
-    public Cart removeFromCart(@PathVariable Long productId, Authentication authentication) {
-        String userId = "test";
-        return cartService.removeItem(userId, productId);
+    public String removeFromCart(@PathVariable Long productId, Authentication authentication) {
+       return "test.html";
     }
 }

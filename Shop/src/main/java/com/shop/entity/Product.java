@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Entity
 @Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="products")
@@ -19,10 +19,10 @@ public class Product
     private long productId;
 
     @Column(name = "seller_id", nullable = false)
-    private int sellerId;
+    private long sellerId;
 
     @Column(name = "category_id", nullable = false)
-    private int categoryId;
+    private long categoryId;
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;
