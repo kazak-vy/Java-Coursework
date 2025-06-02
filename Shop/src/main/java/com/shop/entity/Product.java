@@ -44,9 +44,6 @@ public class Product
 
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
-
-    @Column(name = "is_sold", nullable = false)
-    private boolean isSold;
 }
 
 

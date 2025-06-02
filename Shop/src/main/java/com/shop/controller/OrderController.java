@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.shop.utils.UserUtils.getUserId;
@@ -53,7 +52,8 @@ public class OrderController
     }
 
     @PostMapping("/{orderId}/finalize")
-    public String finalizeOrder(@PathVariable long orderId, @Valid @ModelAttribute ShippingInfo shippingInfo, Model model, HttpServletRequest request)
+    public String finalizeOrder(@PathVariable long orderId, @Valid @ModelAttribute
+                                ShippingInfo shippingInfo, Model model, HttpServletRequest request)
     {
         CsrfToken csrfToken = (CsrfToken) request.getAttribute("_csrf");
         model.addAttribute("_csrf", csrfToken);
@@ -96,6 +96,4 @@ public class OrderController
 
         return "/orders/order-info.html";
     }
-
-
 }

@@ -28,9 +28,9 @@ public class ProductService
         return productRepository.findById(id);
     }
 
-    public void saveProduct(Product product)
+    public Product saveProduct(Product product)
     {
-        productRepository.save(product);
+       return productRepository.save(product);
     }
 
     public void deleteProduct(Product product)

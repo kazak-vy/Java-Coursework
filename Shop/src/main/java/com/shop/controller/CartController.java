@@ -14,7 +14,6 @@ import java.util.List;
 
 import static com.shop.utils.UserUtils.getUserId;
 
-
 @Controller
 @RequestMapping("/cart")
 public class CartController
@@ -58,14 +57,16 @@ public class CartController
     @GetMapping("/{productId}/remove")
     public String removeFromCart(@PathVariable Long productId)
     {
-        cartService.deleteCartItem(cartService.getCartItemByCartIdAndProductId(cartService.getCartIdByUserId(getUserId()), productId));
+        long cartId = cartService.getCartIdByUserId(getUserId());
+        cartService.deleteCartItem(cartService.getCartItemByCartIdAndProductId(cartId, productId));
        return "redirect:/cart/view";
     }
 
     @GetMapping("/{productId}/remove-one")
     public String removeOneFromCart(@PathVariable Long productId)
     {
-        CartItem updatedCartItem = cartService.getCartItemByCartIdAndProductId(cartService.getCartIdByUserId(getUserId()), productId);
+        long cartId = cartService.getCartIdByUserId(getUserId());
+        CartItem updatedCartItem = cartService.getCartItemByCartIdAndProductId(cartId, productId);
         if(updatedCartItem.getQuantity() == 1)
         {
             cartService.deleteCartItem(updatedCartItem);

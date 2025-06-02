@@ -62,9 +62,9 @@ public class OrderService
         return orderItemRepository.findOrderItemsByOrderId(orderId);
     }
 
-    public void saveOrder(Order order)
+    public Order saveOrder(Order order)
     {
-        orderRepository.save(order);
+        return orderRepository.save(order);
     }
 
     public List<Order> getAllOrders()
@@ -72,14 +72,14 @@ public class OrderService
         return orderRepository.findAll();
     }
 
-    public void saveOrderItem(OrderItem orderItem)
+    public OrderItem saveOrderItem(OrderItem orderItem)
     {
-        orderItemRepository.save(orderItem);
+        return orderItemRepository.save(orderItem);
     }
 
-    public void saveShippingInfo(ShippingInfo shippingInfo)
+    public ShippingInfo saveShippingInfo(ShippingInfo shippingInfo)
     {
-        shippingInfoRepository.save(shippingInfo);
+        return shippingInfoRepository.save(shippingInfo);
     }
 
     public void deleteOrder(Order order)

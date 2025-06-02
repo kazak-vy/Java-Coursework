@@ -81,7 +81,8 @@ public class ProductController
     }
 
     @PostMapping("/{productId}/edit")
-    public String updateProduct(@PathVariable long productId, @ModelAttribute Product product, Model model, HttpServletRequest request)
+    public String updateProduct(@PathVariable long productId, @ModelAttribute Product product,
+                                Model model, HttpServletRequest request)
     {
         CsrfToken csrfToken = (CsrfToken) request.getAttribute("_csrf");
         model.addAttribute("_csrf", csrfToken);

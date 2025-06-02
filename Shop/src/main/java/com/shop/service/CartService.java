@@ -35,9 +35,9 @@ public class CartService
         return cartRepository.findById(cartId);
     }
 
-    public void saveCart(Cart cart)
+    public Cart saveCart(Cart cart)
     {
-        cartRepository.save(cart);
+        return cartRepository.save(cart);
     }
 
     public void deleteCart(Cart cart)
@@ -65,9 +65,9 @@ public class CartService
         return cartItemRepository.findById(cartItemId);
     }
 
-    public void saveCartItem(CartItem cartItem)
+    public CartItem saveCartItem(CartItem cartItem)
     {
-        cartItemRepository.save(cartItem);
+        return cartItemRepository.save(cartItem);
     }
 
     public void deleteCartItem(CartItem cartItem)
