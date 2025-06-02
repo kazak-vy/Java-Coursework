@@ -55,8 +55,36 @@ public class CartController
         return "redirect:/products/product-list";
     }
 
-    @DeleteMapping("/remove/{productId}")
-    public String removeFromCart(@PathVariable Long productId) {
-       return "test.html";
+    @GetMapping("/{productId}/remove")
+    public String removeFromCart(@PathVariable Long productId)
+    {
+        cartService.deleteCartItem(cartService.getCartItemByCartIdAndProductId(cartService.getCartIdByUserId(getUserId()), productId));
+       return "redirect:/cart/view";
+    }
+
+    @GetMapping("/{productId}/remove-one")
+    public String removeOneFromCart(@PathVariable Long productId)
+    {
+        CartItem updatedCartItem = cartService.getCartItemByCartIdAndProductId(cartService.getCartIdByUserId(getUserId()), productId);
+        if(updatedCartItem.getQuantity() == 1)
+        {
+            cartService.deleteCartItem(updatedCartItem);
+        }
+        else
+        {
+            updatedCartItem.setQuantity(updatedCartItem.getQuantity() - 1);
+            cartService.saveCartItem(updatedCartItem);
+        }
+
+        return "redirect:/cart/view";
+    }
+
+    @GetMapping("/{productId}/add-one")
+    public String addOneToCart(@PathVariable Long productId)
+    {
+        long cartId = cartService.getCartIdByUserId(getUserId());
+        cartService.addToCart(cartId, productId);
+
+        return "redirect:/cart/view";
     }
 }

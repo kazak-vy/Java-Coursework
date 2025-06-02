@@ -87,6 +87,14 @@ public class CartService
         return cartItemRepository.findCartItemsByCartId(cartId);
     }
 
+    public CartItem getCartItemByCartIdAndProductId(long cartId, long productId)
+    {
+        return cartItemRepository.findCartItemByCartIdAndProductId(cartId, productId)
+                .orElseThrow(
+                        () -> new RuntimeException(String.format("Cart item with cart id %d and product id %d not found",cartId, productId))
+                );
+    }
+
     public void addToCart(long cartId, long productId)
     {
         Optional<CartItem> existingItem = cartItemRepository.findCartItemByCartIdAndProductId(cartId, productId);
@@ -129,7 +137,7 @@ public class CartService
         {
             int quantity = cartItemRepository.findCartItemByProductId(product.getProductId()).get().getQuantity();
 
-            CartItemDTO newDto = new CartItemDTO(
+            CartItemDTO newDto = new CartItemDTO(product.getProductId(),
                     product.getName(), product.getQuantity(), quantity , product.getPrice());
             dtoList.add(newDto);
         }
