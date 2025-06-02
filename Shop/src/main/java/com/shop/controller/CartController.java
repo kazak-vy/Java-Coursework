@@ -30,7 +30,6 @@ public class CartController
     {
         if(cartService.getCartByUserId(getUserId()) == null)
         {
-            System.out.println("new cart");
             Cart newCart = new Cart();
             newCart.setUserId(getUserId());
 
@@ -38,7 +37,6 @@ public class CartController
         }
         else
         {
-            System.out.println("existing cart");
             List<CartItem> cartItemsList = cartService.getCartItemsByUserId(getUserId());
             model.addAttribute("itemsList", cartItemsList);
 

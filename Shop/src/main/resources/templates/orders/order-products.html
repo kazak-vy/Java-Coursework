@@ -16,6 +16,8 @@
             <td> <p th:text="${item.quantity}"></p></td>
         </tr>
     </table>
-<p><a href="/orders/finalize">finalize order</a></p>
+
+<td><a th:href="'/orders/' + ${order.orderId} + '/finalize'">finalize order</a></td>
+
 </body>
 </html>

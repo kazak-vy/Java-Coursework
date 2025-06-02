@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Title</title>
+</head>
+<body>
+<h1>Order view</h1>
+
+<div th:each="order : ${orders}">
+    <a th:href="'/orders/' + ${order.orderId}" style="text-decoration:none;color:black;">
+    <table>
+        <tr>
+            <th>Order id</th>
+            <td th:text="${order.orderId}"/>
+        </tr>
+        <tr>
+            <th>Order date</th>
+            <td th:text="${order.date}"/>
+        </tr>
+    </table>
+    </a>
+    <hr>
+</div>
+</body>
+</html>

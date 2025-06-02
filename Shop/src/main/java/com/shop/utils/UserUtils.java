@@ -16,6 +16,4 @@ public class UserUtils
 
         return user.getName();
     }
-
-
 }

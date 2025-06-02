@@ -25,6 +25,9 @@ public class ShippingInfo
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @Column(name = "phoneNumber", nullable = false)
+    private int phoneNumber;
+
     @Column(name = "country", nullable = false)
     private String country;
 

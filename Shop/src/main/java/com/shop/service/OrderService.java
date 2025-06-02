@@ -1,11 +1,9 @@
 package com.shop.service;
 
-import com.shop.entity.Cart;
-import com.shop.entity.CartItem;
-import com.shop.entity.Order;
-import com.shop.entity.OrderItem;
+import com.shop.entity.*;
 import com.shop.repository.OrderItemRepository;
 import com.shop.repository.OrderRepository;
+import com.shop.repository.ShippingInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +22,9 @@ public class OrderService
     private OrderItemRepository orderItemRepository;
 
     @Autowired
+    private ShippingInfoRepository shippingInfoRepository;
+
+    @Autowired
     private CartService cartService;
 
     public Optional<Order> getOrderById(long orderId)
@@ -36,9 +37,29 @@ public class OrderService
         return orderItemRepository.findById(orderItemId);
     }
 
+    public List<Order> getOrdersByUserId(String userId)
+    {
+        return orderRepository.findOrdersByUserId(userId);
+    }
+
+    public Optional<ShippingInfo> getShippingInfoById(long shippingInfoId)
+    {
+        return shippingInfoRepository.findById(shippingInfoId);
+    }
+
+    public ShippingInfo getShippingInfoByOrderId(long orderId)
+    {
+       return shippingInfoRepository.findShippingInfoByOrderId(orderId);
+    }
+
     public List<OrderItem> getOrderItemsById(List<Long> orderItemIds)
     {
         return orderItemRepository.findAllById(orderItemIds);
+    }
+
+    public List<OrderItem> getOrderItemsByOrderId(long orderId)
+    {
+        return orderItemRepository.findOrderItemsByOrderId(orderId);
     }
 
     public void saveOrder(Order order)
@@ -46,9 +67,19 @@ public class OrderService
         orderRepository.save(order);
     }
 
+    public List<Order> getAllOrders()
+    {
+        return orderRepository.findAll();
+    }
+
     public void saveOrderItem(OrderItem orderItem)
     {
         orderItemRepository.save(orderItem);
+    }
+
+    public void saveShippingInfo(ShippingInfo shippingInfo)
+    {
+        shippingInfoRepository.save(shippingInfo);
     }
 
     public void deleteOrder(Order order)
@@ -59,6 +90,11 @@ public class OrderService
     public void deleteOrderItem(OrderItem orderItem)
     {
         orderItemRepository.delete(orderItem);
+    }
+
+    public void deleteShippingInfo(ShippingInfo shippingInfo)
+    {
+        shippingInfoRepository.delete(shippingInfo);
     }
 
     public Order createOrder(Cart cart)

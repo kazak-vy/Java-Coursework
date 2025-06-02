@@ -26,30 +26,20 @@ public class SecurityConfig
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
     {
-        http.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
         http.oauth2Login(Customizer.withDefaults());
+        http.logout(logout -> logout
+            .logoutSuccessHandler((request, response, authentication) -> {
+                String keycloakLogoutUrl = "http://localhost:8080/realms/Test/protocol/openid-connect/logout" +
+                        "?redirect_uri=http://localhost:8081/logged-out";
+
+                response.sendRedirect(keycloakLogoutUrl);
+            })
+    );
         return http
-                .authorizeHttpRequests(c -> c.requestMatchers("/error", "/**", "/products/**").permitAll()
+                .authorizeHttpRequests(c -> c
+                        .requestMatchers("/**").authenticated()
+                        .requestMatchers("/error", "/products/**").permitAll()
                         .anyRequest().authenticated())
                 .build();
-    }
-
-    @Bean
-    public JwtDecoder jwtDecoder() {
-        String jwkSetUri = "http://localhost:8080/realms/Test/protocol/openid-connect/certs";
-        return NimbusJwtDecoder.withJwkSetUri(jwkSetUri).build();
-    }
-
-    @Bean
-    public JwtAuthenticationConverter jwtAuthenticationConverter() {
-        JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
-        converter.setJwtGrantedAuthoritiesConverter(jwt -> {
-            Collection<String> roles = ((Collection<String>) jwt.getClaim("realm_access.roles"));
-            return roles.stream()
-                    .map(role -> "ROLE_" + role)
-                    .map(SimpleGrantedAuthority::new)
-                    .collect(Collectors.toList());
-        });
-        return converter;
     }
 }

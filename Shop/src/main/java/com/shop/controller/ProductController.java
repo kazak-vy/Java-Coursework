@@ -3,8 +3,6 @@ package com.shop.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.shop.entity.CartItem;
-import com.shop.entity.Category;
 import com.shop.entity.Product;
 import com.shop.service.CartService;
 import com.shop.service.CategoryService;
