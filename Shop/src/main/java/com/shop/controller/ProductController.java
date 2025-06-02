@@ -25,6 +25,9 @@ public class ProductController
     private ProductService productService;
 
     @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
     private CartService cartService;
 
     @GetMapping("/product-list")
@@ -38,8 +41,6 @@ public class ProductController
     @GetMapping("/create-product")
     public String createProductForm(Model model)
     {
-        CategoryService categoryService = new CategoryService();
-
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("product", new Product());
         return "products/create-product.html";

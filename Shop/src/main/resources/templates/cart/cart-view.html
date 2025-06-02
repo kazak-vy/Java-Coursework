@@ -7,15 +7,19 @@
 <body>
 <h1>Your cart</h1>
 <div>
-<table th:each="item : ${itemsList}">
+<table th:each="dto : ${dtoList}">
   <tr>
-    <th th:text="'product id: ' + ${item.productId}"/>
+    <th th:text="'product id: ' + ${dto.productName}"/>
   </tr>
   <tr>
-    <th th:text="'quantity: ' + ${item.quantity}"/>
+    <th th:text="'quantity: ' + ${dto.quantity}"/>
+  </tr>
+  <tr>
+    <th th:text="'total price: ' + ${dto.price} * ${dto.quantity}"/>
     <hr>
   </tr>
 </table>
+  <p><a href="/orders/order-products">order</a></p>
 </div>
 
 <p><a href="/">to main</a></p>

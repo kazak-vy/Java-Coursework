@@ -1,12 +1,15 @@
 package com.shop.service;
 
+import com.shop.dto.CartItemDTO;
 import com.shop.entity.Cart;
 import com.shop.entity.CartItem;
+import com.shop.entity.Product;
 import com.shop.repository.CartItemRepository;
 import com.shop.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +21,9 @@ public class CartService
 
     @Autowired
     private CartItemRepository cartItemRepository;
+
+    @Autowired
+    private ProductService productService;
 
     public List<Cart> getAllCarts()
     {
@@ -97,5 +103,31 @@ public class CartService
             newItem.setQuantity(1);
             cartItemRepository.save(newItem);
         }
+    }
+
+    public CartItem getCartItemByProductId(long productId)
+    {
+        return cartItemRepository.findCartItemByProductId(productId).get();
+    }
+
+    public List<CartItemDTO> getCartItemDTOs(List<CartItem> items)
+    {
+        List<Long> idsList = new ArrayList<>();
+        for(CartItem item: items)
+        {
+            idsList.add(item.getProductId());
+        }
+        List<Product> productList = productService.getProductsById(idsList);
+
+        List<CartItemDTO> dtoList = new ArrayList<>();
+        for(Product product: productList)
+        {
+            int quantity = cartItemRepository.findCartItemByProductId(product.getProductId()).get().getQuantity();
+
+            CartItemDTO newDto = new CartItemDTO(
+                    product.getName(), product.getQuantity(), quantity , product.getPrice());
+            dtoList.add(newDto);
+        }
+        return dtoList;
     }
 }
