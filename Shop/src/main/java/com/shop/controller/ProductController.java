@@ -3,8 +3,10 @@ package com.shop.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.shop.entity.CartItem;
 import com.shop.entity.Category;
 import com.shop.entity.Product;
+import com.shop.service.CartService;
 import com.shop.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +14,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import static com.shop.utils.UserUtils.getUserId;
+
 @Controller
 public class ProductController
 {
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private CartService cartService;
 
     @GetMapping("/products/product-list")
     public String allProducts(Model model)
@@ -120,6 +127,24 @@ public class ProductController
                 );
 
         productService.deleteProduct(productToDelete);
+
+        return "redirect:/products/product-list";
+    }
+
+    @GetMapping("/products/{productId}/add")
+    public String addProductToCart(@PathVariable long productId)
+    {
+        Product productToAdd = productService.getProductById(productId)
+                .orElseThrow(
+                        () -> new RuntimeException(String.format("Product with %d id not found", productId))
+                );
+
+        CartItem item = new CartItem(productId, 1);
+        cartService.addItem(getUserId(), item);
+
+        System.out.println(item.getProductId());
+        System.out.println(item.getQuantity());
+        System.out.println("added");
 
         return "redirect:/products/product-list";
     }
