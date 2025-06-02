@@ -3,6 +3,16 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Create product</title>
+    <script>
+        function addImageField() {
+            const container = document.getElementById("image-url-fields");
+            const input = document.createElement("input");
+            input.setAttribute("type", "text");
+            input.setAttribute("name", "imageUrls");
+            input.setAttribute("placeholder", "Image URL");
+            container.appendChild(input);
+        }
+    </script>
 </head>
 
 <h1>Create product listing</h1>
@@ -29,8 +39,8 @@
         <td><input id="price" th:field="*{price}" type="number" min="1" value="1" required/></td>
     </tr>
     <tr>
-        <th><label for="photos">Photo of product</label></th>
-        <td><input id="photos" placeholder="test" /></td>
+        <th><label for="photo">Photo of product</label></th>
+        <td><input id="photo" th:field="*{photoUrl}" type="url"/></td>
     </tr>
     <tr>
         <th><label for="condition">Pick condition</label></th>

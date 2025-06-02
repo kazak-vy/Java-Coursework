@@ -3,6 +3,7 @@ package com.shop.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -28,8 +29,7 @@ public class SecurityConfig
         http.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
         http.oauth2Login(Customizer.withDefaults());
         return http
-                .authorizeHttpRequests(c -> c.requestMatchers("/error").permitAll()
-                        .requestMatchers("/admin.html").hasRole("role_admin")
+                .authorizeHttpRequests(c -> c.requestMatchers("/error", "/**", "/products/**").permitAll()
                         .anyRequest().authenticated())
                 .build();
     }

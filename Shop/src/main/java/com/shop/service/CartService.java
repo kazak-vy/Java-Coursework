@@ -91,12 +91,17 @@ public class CartService
     {
         Optional<CartItem> existingItem = cartItemRepository.findCartItemByCartIdAndProductId(cartId, productId);
 
-        if (existingItem.isPresent()) {
+        if (existingItem.isPresent())
+        {
             CartItem item = existingItem.get();
-            item.setQuantity(item.getQuantity() + 1);
-            cartItemRepository.save(item);
-        } else {
-            // Add new product to cart
+            if(productService.getProductById(productId).get().getQuantity() > item.getQuantity())
+            {
+                item.setQuantity(item.getQuantity() + 1);
+                cartItemRepository.save(item);
+            }
+        }
+        else
+        {
             CartItem newItem = new CartItem();
             newItem.setCartId(cartId);
             newItem.setProductId(productId);

@@ -1,11 +1,10 @@
 package com.shop.repository;
 
-import com.shop.entity.Cart;
+import com.shop.entity.ShippingInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CartRepository extends JpaRepository<Cart, Long>
+public interface ShippingInfoRepository extends JpaRepository<ShippingInfo, Long>
 {
-    public Cart findCartByUserId(String userId);
 }

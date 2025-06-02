@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Title</title>
+</head>
+<body>
+<form th:object="${shippingInfo}" method="post">
+  <table>
+    <tr>
+      <th>First name</th>
+      <td><input type="text"></td>
+    </tr>
+    <tr>
+      <th>Last name</th>
+      <td><input type="text"></td>
+    </tr>
+    <tr>
+      <th>Phone number</th>
+      <td><input type="tel"/></td>
+    </tr>
+    <tr>
+      <th>Shipping address</th>
+      <td><input type="text"/></td>
+    </tr>
+    <tr>
+      <th>Payment type</th>
+      <td><input type="radio" name="payment"/></td>
+      <td><input type="radio" name="payment"/></td>
+    </tr>
+  </table>
+</form>
+
+</body>
+</html>

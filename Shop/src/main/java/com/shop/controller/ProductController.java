@@ -9,8 +9,10 @@ import com.shop.entity.Product;
 import com.shop.service.CartService;
 import com.shop.service.CategoryService;
 import com.shop.service.ProductService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -49,7 +51,7 @@ public class ProductController
     @PostMapping("/create-product")
     public String addProduct(@Valid @ModelAttribute Product product, Model model)
     {
-        product.setSellerId(1);
+        product.setSellerId(getUserId());
         product.setCreationDate(LocalDateTime.now());
         product.setSold(true);
 
@@ -81,8 +83,11 @@ public class ProductController
     }
 
     @PostMapping("/{productId}/edit")
-    public String updateProduct(@PathVariable long productId, @ModelAttribute Product product, Model model)
+    public String updateProduct(@PathVariable long productId, @ModelAttribute Product product, Model model, HttpServletRequest request)
     {
+        CsrfToken csrfToken = (CsrfToken) request.getAttribute("_csrf");
+        model.addAttribute("_csrf", csrfToken);
+
         Product updatedProduct = productService.getProductById(productId)
                 .orElseThrow(
                         () -> new RuntimeException("Item not found")
@@ -97,9 +102,8 @@ public class ProductController
 
         productService.saveProduct(updatedProduct);
 
-        return "redirect:/products/{id}";
+        return "redirect:/products/product-list";
     }
-
 
     @GetMapping("/{productId}/delete")
     public String deleteProduct(@PathVariable long productId)

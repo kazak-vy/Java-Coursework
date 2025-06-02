@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Order</title>
 </head>
 <body>
 <h1>Order page</h1>
+    <table th:each="item :${items}">
+        <tr>
+            <th>Product id</th>
+            <td> <p th:text="${item.productId}"></p></td>
+        </tr>
+        <tr>
+            <th>Product quantity</th>
+            <td> <p th:text="${item.quantity}"></p></td>
+        </tr>
+    </table>
+<p><a href="/orders/finalize">finalize order</a></p>
 </body>
 </html>

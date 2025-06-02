@@ -18,10 +18,10 @@ public class Product
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long productId;
 
-    @Column(name = "seller_id", nullable = false)
-    private long sellerId;
+    @JoinColumn(name = "seller_id", nullable = false)
+    private String sellerId;
 
-    @Column(name = "category_id", nullable = false)
+    @JoinColumn(name = "category_id", nullable = false)
     private long categoryId;
 
     @Column(name = "name", nullable = false, unique = true)
@@ -39,10 +39,15 @@ public class Product
     @Column(name = "condition", nullable = false)
     private String condition;
 
+    @Column(name = "photoUrl")
+    private String photoUrl;
+
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
 
     @Column(name = "is_sold", nullable = false)
     private boolean isSold;
 }
+
+
 

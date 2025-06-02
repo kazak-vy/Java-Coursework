@@ -9,6 +9,7 @@
 <h1>Edit product listing</h1>
 <hr>
 <form th:object="${product}" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <table>
         <tr>
             <th th:text="${product.productId}"></th>

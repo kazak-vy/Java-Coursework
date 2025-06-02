@@ -38,6 +38,6 @@ public class UserController
         model.addAttribute("firstName", firstName);
         model.addAttribute("lastName", lastName);
 
-        return "profile.html"; // return the view name
+        return "profile.html";
     }
 }

@@ -6,14 +6,10 @@ import com.shop.entity.CartItem;
 import com.shop.service.CartService;
 import com.shop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.method.P;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.shop.utils.UserUtils.getUserId;
@@ -62,7 +58,7 @@ public class CartController
     }
 
     @DeleteMapping("/remove/{productId}")
-    public String removeFromCart(@PathVariable Long productId, Authentication authentication) {
+    public String removeFromCart(@PathVariable Long productId) {
        return "test.html";
     }
 }
