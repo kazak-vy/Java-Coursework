@@ -2,10 +2,8 @@ package com.shop.controller.api;
 
 import com.shop.entity.Product;
 import com.shop.service.ProductService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
