@@ -17,8 +17,8 @@
         <td th:text="${category.description}"/>
       </tr>
     </table>
-  <p><button style="background-color:yellow">Edit</button></p>
-  <p><button style="background-color:red">Delete</button></p>
+  <p><a style="background-color:yellow;text-decoration:none;color:black" th:href="'/categories/' + ${category.categoryId} + '/edit'">Edit</a></p>
+  <p><a style="background-color:red;text-decoration:none;color:black" th:href="'/categories/' + ${category.categoryId} + '/delete'">Delete</a></p>
   <hr>
 </div>
 

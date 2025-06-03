@@ -51,7 +51,6 @@ public class ProductController
     {
         product.setSellerId(getUserId());
         product.setCreationDate(LocalDateTime.now());
-        product.setSold(true);
 
         productService.saveProduct(product);
 
