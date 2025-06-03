@@ -13,7 +13,7 @@ import java.util.List;
 import static com.shop.utils.UserUtils.getUserId;
 
 @RestController
-@RequestMapping("/api-orders")
+@RequestMapping("/api/orders")
 public class OrderControllerApi
 {
     @Autowired

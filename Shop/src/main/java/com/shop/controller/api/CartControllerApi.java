@@ -13,7 +13,7 @@ import java.util.List;
 import static com.shop.utils.UserUtils.getUserId;
 
 @RestController
-@RequestMapping("/api-carts")
+@RequestMapping("/api/carts")
 public class CartControllerApi
 {    @Autowired
 private CartService cartService;
